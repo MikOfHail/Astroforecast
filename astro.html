@@ -1,8 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astronomical Forecast - Login</title>
+    <link rel="stylesheet" href="sheets.css">
+</head>
 <body>
-
-<p>Hello<p>
-
+    <div class="container">
+        <h1>Astronomical Forecast</h1>
+        <input type="text" id="cityInput" placeholder="(City)">
+        <input type="text" id="stateInput" placeholder="(State)">
+        <button onclick="setCityStateVariables()">Submit</button>
+    </div>
+    <script src="astro.js"></script>
 </body>
 </html>
