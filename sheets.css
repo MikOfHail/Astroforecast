@@ -54,12 +54,19 @@ nav {
 }
 
 .calendar-grid div {
-    background-color: #435762;
     width: 5vw;
     height: 5vw; 
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.day{
+    background-color: #435762;
+}
+
+.empty-day{
+    background-color: #274255;
 }
 
 .arrow {
