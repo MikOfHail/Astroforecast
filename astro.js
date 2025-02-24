@@ -2,6 +2,8 @@ const currentDate = new Date();
 var month = currentDate.getMonth(); // Get the current month (0-11)
 var year = currentDate.getFullYear(); // Get the current year
 
+var eventType; //type of event to be displace in eventDescription
+
 const monthName = [
     "January",
     "February",
@@ -67,52 +69,75 @@ function setCityStateVariables() {
     }
 }
 
-function addIconToDay(day, color) {
+class Icon {
+    constructor(color, name) {
+        this.color = color;
+        this.name = name;
+    }
+
+    createElement() {
+        const icon = document.createElement('div');
+        icon.classList.add('icon');
+        icon.style.backgroundColor = this.color;
+
+        icon.addEventListener('click', () => {
+            alert(`${this.name} icon clicked!`);
+        });
+
+        return icon;
+    }
+}
+
+function addIconToDay(day, iconInstance) {
     const calendarGrid = document.getElementById('calendarGrid');
     const dayDivs = calendarGrid.getElementsByClassName('day');
     const dayDiv = Array.from(dayDivs).find(div => div.textContent.trim() == day);
 
     if (dayDiv) {
-        const icon = document.createElement('div');
-        icon.classList.add('icon');
-        icon.style.backgroundColor = color;
-        icon.addEventListener('click', () => {
-            alert(`Icon clicked on day ${day}`);
-        });
-        dayDiv.querySelector('.icons-container').appendChild(icon);
+        const iconElement = iconInstance.createElement();
+        dayDiv.querySelector('.icons-container').appendChild(iconElement);
     }
+}
+
+function loadIcons() {
+    const blueIcon = new Icon('blue', 'Blue');
+    const redIcon = new Icon('red', 'Red');
+    const yellowIcon = new Icon('yellow', 'Yellow');
+
+    addIconToDay(15, blueIcon);
+    addIconToDay(15, redIcon);
+    addIconToDay(15, yellowIcon);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     const leftArrow = document.getElementById('leftArrow');
     const rightArrow = document.getElementById('rightArrow');
     const titleMonth = document.getElementById('titleMonth');
-    const titleYear = document.getElementById('titleYear');
 
     leftArrow.addEventListener('click', () => {
         month = (month - 1 + 12) % 12;
-        titleMonth.textContent = monthName[month];
         if (month==11) {
-            updateYear();
+            year--
         }
+        updateYear();
         updateMonthName();
         generateCalendarDays();
+        loadIcons()
     });
 
     rightArrow.addEventListener('click', () => {
         month = (month + 1 + 12) % 12;
-        titleMonth.textContent = monthName[month];
         if (month==0) {
-            updateYear();
+            year++
         }
+        updateYear();
         updateMonthName();
         generateCalendarDays();
+        loadIcons()
     });
     // Initialize the calendar on page load
     updateMonthName();
     updateYear();
     generateCalendarDays();
-    addIconToDay(15, 'blue');
-    addIconToDay(15, 'red');
-    addIconToDay(15, 'yellow');
+    loadIcons();
 });

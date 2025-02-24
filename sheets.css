@@ -25,6 +25,7 @@ nav {
     display: flex;
     flex-direction: column;
     position: relative;
+    overflow: visible;
 }
 
 .calendar-title {
@@ -108,8 +109,9 @@ nav {
     height: 1vw !important;
     border-radius: 50%;
     background-color: red; /* Change color as needed */
+    position: relative;
+    display: inline-block;
     cursor: pointer;
-
 }
 
 .day-number {
