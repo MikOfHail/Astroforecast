@@ -43,7 +43,7 @@ function generateCalendarDays() {
     for (let day = 1; day <= daysInMonth; day++) {
         const dayDiv = document.createElement('div');
         dayDiv.classList.add('day');
-        dayDiv.textContent = day;
+        dayDiv.innerHTML = `<div class="icons-container"></div><span class="day-number">${day}</span>`;
         calendarGrid.appendChild(dayDiv);
     }
 
@@ -64,6 +64,22 @@ function setCityStateVariables() {
     console.log('User input:', city, state);
     if (true) {
         window.location.href = 'calendar.html';
+    }
+}
+
+function addIconToDay(day, color) {
+    const calendarGrid = document.getElementById('calendarGrid');
+    const dayDivs = calendarGrid.getElementsByClassName('day');
+    const dayDiv = Array.from(dayDivs).find(div => div.textContent.trim() == day);
+
+    if (dayDiv) {
+        const icon = document.createElement('div');
+        icon.classList.add('icon');
+        icon.style.backgroundColor = color;
+        icon.addEventListener('click', () => {
+            alert(`Icon clicked on day ${day}`);
+        });
+        dayDiv.querySelector('.icons-container').appendChild(icon);
     }
 }
 
@@ -96,4 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateMonthName();
     updateYear();
     generateCalendarDays();
+    addIconToDay(15, 'blue');
+    addIconToDay(15, 'red');
+    addIconToDay(15, 'yellow');
 });
