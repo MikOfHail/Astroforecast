@@ -80,8 +80,15 @@ class Icon {
         icon.classList.add('icon');
         icon.style.backgroundColor = this.color;
 
+        const popup = document.createElement('div');
+        popup.classList.add('popup');
+        popup.textContent = `${this.name} icon`;
+
+        icon.appendChild(popup);
+
+
         icon.addEventListener('click', () => {
-            alert(`${this.name} icon clicked!`);
+            window.location.href = 'eventDescription.html';
         });
 
         return icon;
@@ -91,7 +98,7 @@ class Icon {
 function addIconToDay(day, iconInstance) {
     const calendarGrid = document.getElementById('calendarGrid');
     const dayDivs = calendarGrid.getElementsByClassName('day');
-    const dayDiv = Array.from(dayDivs).find(div => div.textContent.trim() == day);
+    const dayDiv = Array.from(dayDivs).find(div => div.querySelector('.day-number').textContent.trim() == day);
 
     if (dayDiv) {
         const iconElement = iconInstance.createElement();
