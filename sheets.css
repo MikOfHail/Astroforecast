@@ -10,6 +10,10 @@ body {
     color: #ffffff;
 }
 
+body.event-description-page {
+    display: block;
+}
+
 nav {
     margin-bottom: 20px;
 }
@@ -19,6 +23,11 @@ nav {
     flex-direction: column;
     padding: 10px;
     gap: 10px;
+    text-align: left;
+}
+
+.event-description-container {
+    padding: 40px;
 }
 
 .calendar {
@@ -159,6 +168,7 @@ nav {
 h1 {
     font-size: 2vw;
     margin-bottom: 1vh;
+    align-self: flex-start; /* Align the title to the start (left) */
 }
 
 ul {
@@ -167,15 +177,23 @@ ul {
     margin: 0 0 2vh 0;
 }
 
+.event-description-container ul {
+    padding-left: 40px; /* Adjust the value as needed */
+}
+
 ul li {
     font-size: 1.5vw;
     margin-bottom: 1vh;
+    padding: 5px;
 }
 
 table {
-    width: 100%;
+    table-layout: auto; /* Ensure the table layout is auto */
+    width: auto; /* Ensure the table width is auto */
+    max-width: 50%; /* Set a maximum width for the table */
     border-collapse: collapse;
     margin-bottom: 2vh;
+    margin-left: 0; /* Align the table to the left */
 }
 
 table th, table td {
@@ -183,16 +201,14 @@ table th, table td {
     padding: 1vh;
     text-align: center;
     font-size: 1.2vw;
+    width: auto; /* Ensure the cells fit the content */
 }
+
 
 table th {
     background-color: #1B2F48;
 }
 
-table tbody tr:nth-child(even) {
-    background-color: #435762;
-}
-
-table tbody tr:nth-child(odd) {
+table tbody {
     background-color: #274255;
 }
