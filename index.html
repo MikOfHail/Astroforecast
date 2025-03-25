@@ -9,11 +9,26 @@
 <body>
    <div class="container">
         <h1>Astronomical Forecast</h1>
-        <input type="text" id="cityInput" placeholder="(City)">
-        <input type="text" id="stateInput" placeholder="(State)">
-        <button onclick="setCityStateVariables()">Submit</button>
+        <input type="text" id="latitudeInput" placeholder="Latitude">
+        <input type="text" id="longitudeInput" placeholder="Longitude">
+        <button onclick="redirectToCalendar()">Submit</button>
     </div>
     <div class="blue-bar"></div>
-    <script src="astro.js"></script>
+    <script>
+        function redirectToCalendar() {
+            const latitude = document.getElementById('latitudeInput').value;
+            const longitude = document.getElementById('longitudeInput').value;
+            if (latitude && longitude) {
+                // Store latitude and longitude in localStorage
+                localStorage.setItem('latitude', latitude);
+                localStorage.setItem('longitude', longitude);
+
+                // Redirect to the calendar page
+                window.location.href = 'calendar.html';
+            } else {
+                alert('Please enter both latitude and longitude.');
+            }
+        }
+    </script>
 </body>
 </html>

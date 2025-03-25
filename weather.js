@@ -1,4 +1,12 @@
 const date = getQueryParam('date');
+let latitude = getQueryParam('latitude'); // Get latitude from query parameters
+let longitude = getQueryParam('longitude'); // Get longitude from query parameters
+
+// Fallback to localStorage if latitude and longitude are not in query parameters
+if (!latitude || !longitude) {
+    latitude = localStorage.getItem('latitude');
+    longitude = localStorage.getItem('longitude');
+}
 
 function setCurrentTime() {
     const now = new Date();
@@ -13,9 +21,13 @@ function getQueryParam(name) {
 }
 
 function fetchWeatherData() {
-    const lat = '30.2672'; // Replace with the desired latitude
-    const lon = '-97.7431'; // Replace with the desired longitude
-    const url = `https://api.weather.gov/points/${lat},${lon}`;
+    if (!latitude || !longitude) {
+        console.error('Latitude and longitude are required to fetch weather data.');
+        document.getElementById('weather').textContent = 'Latitude and longitude are missing.';
+        return;
+    }
+
+    const url = `https://api.weather.gov/points/${latitude},${longitude}`;
 
     fetch(url)
         .then(response => {
