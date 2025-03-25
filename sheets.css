@@ -96,6 +96,12 @@ nav {
     right: -2vw;
 }
 
+.event-description-container .left-arrow {
+    position: absolute;
+    left: 5%;
+    top: 75%;
+}
+
 .blue-bar {
     width: 100%;
     height: 10vh;
@@ -197,13 +203,12 @@ table {
 }
 
 table th, table td {
-    border: 1px solid #ffffff;
+    border: 2px solid #1B2F48;
     padding: 1vh;
     text-align: center;
     font-size: 1.2vw;
     width: auto; /* Ensure the cells fit the content */
 }
-
 
 table th {
     background-color: #1B2F48;
@@ -211,4 +216,56 @@ table th {
 
 table tbody {
     background-color: #274255;
+}
+
+.table-container {
+    display: flex;
+}
+
+.table-container table {
+    flex: 1;
+}
+
+.table-container .description {
+    flex: 1;
+    border: 2px solid #1B2F48;
+    background-color: #274255;
+    margin-bottom: 2vh;
+}
+
+.description {
+    margin-left: 40px;
+    padding: 5px;
+}
+
+.weather-link {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    font-size: 0.8em;
+    text-decoration: none;
+    color: #0f2238;
+    z-index: 2;
+}
+
+.weather-list {
+    margin: 5vw;
+}
+
+.weather-list li {
+    margin-bottom: 2vh;
+    margin-left: 6vw;
+}
+
+#timeInput {
+    background-color: #435762;
+    color: #ffffff;
+    border: 2px solid #0C2E49; /* Change border color and increase thickness */
+    padding: 5px;
+    font-size: 1.5vw;
+    margin-left: 10px;
+}
+
+#timeInput::-webkit-calendar-picker-indicator {
+    filter: invert(1);
 }

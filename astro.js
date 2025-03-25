@@ -36,22 +36,27 @@ function generateCalendarDays() {
     const firstDay = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate(); // Get number of days in the month
 
-    for (let i = 0; i < firstDay; i++) {
+    for (let i = 0; i < firstDay; i++) { // Create empty cells at the beginning of the calendar
         const emptyDiv = document.createElement('div');
         emptyDiv.classList.add('empty-day');
         calendarGrid.appendChild(emptyDiv);
     }
 
-    for (let day = 1; day <= daysInMonth; day++) {
+    for (let day = 1; day <= daysInMonth; day++) { // Create days of the month
         const dayDiv = document.createElement('div');
         dayDiv.classList.add('day');
-        dayDiv.innerHTML = `<div class="icons-container"></div><span class="day-number">${day}</span>`;
+        const formattedDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        dayDiv.innerHTML = `
+            <div class="icons-container"></div>
+            <span class="day-number">${day}</span>
+            <a href="weatherForecast.html?date=${formattedDate}" class="weather-link">weather</a>
+        `;
         calendarGrid.appendChild(dayDiv);
     }
 
     const totalCells = firstDay + daysInMonth;
     const remainingCells = 7 - (totalCells % 7);
-    if (remainingCells < 7) {
+    if (remainingCells < 7) { // Create empty cells at the end of the calendar
         for (let i = 0; i < remainingCells; i++) {
             const emptyDiv = document.createElement('div');
             emptyDiv.classList.add('empty-day');
@@ -70,7 +75,8 @@ function setCityStateVariables() {
 }
 
 class Icon {
-    constructor(color, name) {
+    constructor(color, name, type) {
+        this.type = type;
         this.color = color;
         this.name = name;
     }
@@ -85,7 +91,6 @@ class Icon {
         popup.textContent = `${this.name} icon`;
 
         icon.appendChild(popup);
-
 
         icon.addEventListener('click', () => {
             window.location.href = 'eventDescription.html';
@@ -107,9 +112,9 @@ function addIconToDay(day, iconInstance) {
 }
 
 function loadIcons() {
-    const blueIcon = new Icon('blue', 'Blue');
-    const redIcon = new Icon('red', 'Red');
-    const yellowIcon = new Icon('yellow', 'Yellow');
+    const blueIcon = new Icon('blue', 'Blue', 'asteroid');
+    const redIcon = new Icon('red', 'Red', 'comet');
+    const yellowIcon = new Icon('yellow', 'Yellow', 'eclipse');
 
     addIconToDay(15, blueIcon);
     addIconToDay(15, redIcon);
@@ -119,7 +124,6 @@ function loadIcons() {
 document.addEventListener('DOMContentLoaded', () => {
     const leftArrow = document.getElementById('leftArrow');
     const rightArrow = document.getElementById('rightArrow');
-    const titleMonth = document.getElementById('titleMonth');
 
     leftArrow.addEventListener('click', () => {
         month = (month - 1 + 12) % 12;
