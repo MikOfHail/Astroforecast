@@ -206,7 +206,7 @@ table th, table td {
     border: 2px solid #1B2F48;
     padding: 1vh;
     text-align: center;
-    font-size: 1.2vw;
+    font-size: 15px;
     width: auto; /* Ensure the cells fit the content */
 }
 

@@ -75,28 +75,59 @@ function setCityStateVariables() {
 }
 
 class Icon {
-    constructor(color, name, type) {
-        this.type = type;
+    constructor(color, name, eventType) {
         this.color = color;
         this.name = name;
+        this.eventType = eventType; // Add eventType property
     }
 
-    createElement() {
+    createElement(date) {
         const icon = document.createElement('div');
         icon.classList.add('icon');
         icon.style.backgroundColor = this.color;
 
         const popup = document.createElement('div');
         popup.classList.add('popup');
-        popup.textContent = `${this.name} icon`;
+        popup.textContent = `${this.name}`; // Include eventType in popup
 
         icon.appendChild(popup);
 
         icon.addEventListener('click', () => {
-            window.location.href = 'eventDescription.html';
+            // Redirect to eventDescription.html with query parameters
+            window.location.href = `eventDescription.html?icon=${encodeURIComponent(this.name)}&date=${encodeURIComponent(date)}&eventType=${encodeURIComponent(this.eventType)}`;
         });
 
         return icon;
+    }
+}
+
+class FullMoon extends Icon {
+    constructor(name = 'Full Moon') {
+        super('#c9c9d4', name, 'Lunar Phase'); // Add eventType
+    }
+}
+
+class NewMoon extends Icon {
+    constructor(name = 'New Moon') {
+        super('#2f2f36', name, 'Lunar Phase'); // Add eventType
+    }
+}
+
+class Equinox extends Icon {
+    constructor(name = 'Equinox') {
+        super('#a4d663', name, 'Equinox'); // Add eventType
+    }
+}
+
+class LunarEclipse extends Icon {
+    constructor(name = 'Lunar Eclipse') {
+        super('#a60e00', name, 'Eclipse'); // Add eventType
+    }
+}
+
+class SolarEclipse extends Icon {
+    constructor(name = 'Solar Eclipse') {
+        super('#ddbb00', name, 'Eclipse'); // Add eventType
     }
 }
 
@@ -106,19 +137,36 @@ function addIconToDay(day, iconInstance) {
     const dayDiv = Array.from(dayDivs).find(div => div.querySelector('.day-number').textContent.trim() == day);
 
     if (dayDiv) {
-        const iconElement = iconInstance.createElement();
+        const formattedDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const iconElement = iconInstance.createElement(formattedDate); // Pass the date
         dayDiv.querySelector('.icons-container').appendChild(iconElement);
     }
 }
 
 function loadIcons() {
-    const blueIcon = new Icon('blue', 'Blue', 'asteroid');
-    const redIcon = new Icon('red', 'Red', 'comet');
-    const yellowIcon = new Icon('yellow', 'Yellow', 'eclipse');
+    const monthlyIconMapping = {
+        0: [
+            { day: 14, iconClass: FullMoon, name: 'Wolf Moon' },
+            { day: 29, iconClass: NewMoon, name: 'New Year New Moon' }
+        ],
+        2: [ // March
+            { day: 14, iconClass: FullMoon, name: 'Full Moon' },
+            { day: 29, iconClass: NewMoon, name: 'New Moon' },
+            { day: 20, iconClass: Equinox, name: 'Spring Equinox' },
+            { day: 14, iconClass: LunarEclipse, name: 'Total Lunar Eclipse' },
+            { day: 29, iconClass: SolarEclipse, name: 'Partial Solar Eclipse' }
+        ],
+        8: [
+            { day: 22, iconClass: Equinox, name: 'Fall Equinox' }
+        ],
+    };
 
-    addIconToDay(15, blueIcon);
-    addIconToDay(15, redIcon);
-    addIconToDay(15, yellowIcon);
+    const iconsForCurrentMonth = monthlyIconMapping[month] || []; // Get icons for the current month
+
+    iconsForCurrentMonth.forEach(({ day, iconClass, name }) => {
+        const iconInstance = new iconClass(name); // Pass the name to the constructor
+        addIconToDay(day, iconInstance);
+    });
 }
 
 document.addEventListener('DOMContentLoaded', () => {

@@ -11,64 +11,101 @@
         <h1>Event Description</h1>
         <ul>
             <li>Name:</li>
-            <li>Event Type: lorem ipsum dolor sit amet</li>
+            <li>Event Type:</li>
             <li>Date:</li>
-            <li>Coverage:</li>
+            <li>Coverage: Full</li>
         </ul>
         <div class="table-container">
             <table>
                 <thead>
                     <tr>
-                        <th>Date and Time</th>
+                        <th>Time</th>
                         <th>Azimuth</th>
                         <th>Altitude</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>10:28:25 am</td>
+                        <td>36°</td>
+                        <td>5.9°</td>
                     </tr>
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>11:27:09 am</td>
+                        <td>41°</td>
+                        <td>13.9°</td>
                     </tr>
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>12:30:48 pm</td>
+                        <td>46°</td>
+                        <td>22.9°</td>
                     </tr>
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>1:11:47 pm</td>
+                        <td>49°</td>
+                        <td>32.5°</td>
                     </tr>
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>1:52:51 pm</td>
+                        <td>50°</td>
+                        <td>42.4°</td>
                     </tr>
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>2:56:31 pm</td>
+                        <td>49°</td>
+                        <td>52.3°</td>
                     </tr>
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>3:55:08 pm</td>
+                        <td>42°</td>
+                        <td>61.6°</td>
                     </tr>
                 </tbody>
             </table>
-            <div class="description">
+            <div class="description" id="description">
                 <p>This is a description paragraph that provides additional information about the event. You can add more details here as needed.</p>
             </div>
         </div>
         <div id="leftArrow" class="arrow left-arrow" onclick="location.href='calendar.html';">&#x21E6; BACK</div>
     </div>
     <div class="blue-bar"></div>
-    <script src="astro.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+    // Get the query parameters from the URL
+    const params = new URLSearchParams(window.location.search);
+    const iconName = params.get('icon');
+    const eventDate = params.get('date');
+    const eventType = params.get('eventType');
+
+    try {
+        // Fetch the descriptions from the JSON file
+        const response = await fetch('blurb.JSON');
+        const descriptions = await response.json();
+
+        // Get the description for the clicked icon
+        const description = descriptions[iconName] || 'No description available for this event.';
+
+        // Update the description
+        const descriptionElement = document.getElementById('description');
+        descriptionElement.textContent = description;
+
+        // Update the event name
+        const nameElement = document.querySelector('ul li:nth-child(1)');
+        nameElement.textContent = `Name: ${iconName}`;
+
+        // Update the event type
+        const typeElement = document.querySelector('ul li:nth-child(2)');
+        typeElement.textContent = `Event Type: ${eventType}`;
+
+        // Update the event date
+        const dateElement = document.querySelector('ul li:nth-child(3)');
+        dateElement.textContent = `Date: ${eventDate}`;
+    } catch (error) {
+        console.error('Error fetching or parsing the JSON file:', error);
+        const descriptionElement = document.getElementById('description');
+        descriptionElement.textContent = 'Error loading description.';
+    }
+    });
+    </script>
 </body>
 </html>
