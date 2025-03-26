@@ -119,6 +119,12 @@ class Equinox extends Icon {
     }
 }
 
+class Meteor extends Icon {
+    constructor(name = 'Meteor') {
+        super('#664422', name, 'Meteor'); // Add eventType
+    }
+}
+
 class LunarEclipse extends Icon {
     constructor(name = 'Lunar Eclipse') {
         super('#a60e00', name, 'Eclipse'); // Add eventType
@@ -128,6 +134,18 @@ class LunarEclipse extends Icon {
 class SolarEclipse extends Icon {
     constructor(name = 'Solar Eclipse') {
         super('#ddbb00', name, 'Eclipse'); // Add eventType
+    }
+}
+
+class Perihelion extends Icon {
+    constructor(name = 'Perihelion') {
+        super('#63d6b5', name, 'Perihelion'); // Add eventType
+    }
+}
+
+class Solstice extends Icon {
+    constructor(name = 'Solstice') {
+        super('#63d6b5', name, 'Solstice'); // Add eventType
     }
 }
 
@@ -146,8 +164,14 @@ function addIconToDay(day, iconInstance) {
 function loadIcons() {
     const monthlyIconMapping = {
         0: [
-            { day: 14, iconClass: FullMoon, name: 'Wolf Moon' },
-            { day: 29, iconClass: NewMoon, name: 'New Year New Moon' }
+            { day: 3, iconClass: Meteor, name: 'Meteor Shower' },
+            { day: 4, iconClass: Perihelion, name: 'Perihelion' },
+            { day: 13, iconClass: FullMoon, name: 'Full Moon' },
+            { day: 29, iconClass: NewMoon, name: 'New Moon' }
+        ],
+        1: [
+            { day: 12, iconClass: FullMoon, name: 'Full Moon' },
+            { day: 28, iconClass: NewMoon, name: 'New Moon' }
         ],
         2: [ // March
             { day: 14, iconClass: FullMoon, name: 'Full Moon' },
@@ -156,9 +180,22 @@ function loadIcons() {
             { day: 14, iconClass: LunarEclipse, name: 'Total Lunar Eclipse' },
             { day: 29, iconClass: SolarEclipse, name: 'Partial Solar Eclipse' }
         ],
-        8: [
-            { day: 22, iconClass: Equinox, name: 'Fall Equinox' }
+        3: [
+            { day: 13, iconClass: FullMoon, name: 'Full Moon' },
+            { day: 22, iconClass: Meteor, name: 'Meteor Shower' },
+            { day: 27, iconClass: NewMoon, name: 'New Moon' }
         ],
+        4: [
+            { day: 13, iconClass: FullMoon, name: 'Full Moon' },
+            { day: 22, iconClass: Meteor, name: 'Meteor Shower' },
+            { day: 27, iconClass: NewMoon, name: 'New Moon' }
+        ],
+        11: [
+            { day: 1, iconClass: NewMoon, name: 'New Moon' },
+            { day: 15, iconClass: FullMoon, name: 'Full Moon' },
+            { day: 21, iconClass: Solstice, name: 'Winter Solstice' },
+            { day: 30, iconClass: NewMoon, name: 'New Moon' }
+        ]
     };
 
     const iconsForCurrentMonth = monthlyIconMapping[month] || []; // Get icons for the current month
